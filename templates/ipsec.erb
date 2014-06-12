@@ -1,0 +1,29 @@
+# /etc/ipsec.conf - Openswan IPsec configuration file
+
+# This file:  /usr/share/doc/openswan/ipsec.conf-sample
+#
+# Manual:     ipsec.conf.5
+
+
+version	2.0	# conforms to second version of ipsec.conf specification
+
+# basic configuration
+config setup
+	dumpdir=/var/run/pluto/
+	<% if @nat_traversal -%>
+	nat_traversal=<%= @nat_traversal %>
+	<% end -%>
+	<% if @virtual_private -%>
+	virtual_private=<%= @virtual_private %>
+	<% end -%>
+	<% if @opportunistic_encryption -%>
+	oe=<%= @opportunistic_encryption %>
+	<% end -%>
+	<% if @protostack -%>
+	protostack=<%= @protostack %> 
+	<% end -%>
+	<% if @uniqueids -%>
+	uniqueids=<%= @uniqueids %>
+	<% end -%>
+
+include <%= @connections_dir %>/*.conf
