@@ -1,21 +1,19 @@
 class openswan::config {
-  require openswan::install
   
-  #Enable ipv4 forward
-   
-  sysctl {'net.ipv4.ip_forward':
-    ensure => present,
-    value => '1',
+  File { 
+    owner => 'root',
+    group => 'root',
+    mode => '644',
   }
+     
+ ## configure openswan
   
-  ## configure openswan
-  
-  file { "/etc/ipsec.conf":
+ file { "/etc/ipsec.conf":
       ensure => $openswan::ensure,
       content => template("openswan/ipsec.erb"),
-    }
+  }
 
-  file { "/etc/ipsec.d/connection":
+ file { "/etc/ipsec.d/connection":
 	ensure => directory,
  }
 
