@@ -6,19 +6,24 @@ class openswan::config {
     mode => '644',
   }
      
- ## configure openswan
-  
+ $conn_dir_ensure = $openswan::ensure ?{
+   'absent' => 'absent',  
+   default => 'directory',
+ }
+
+## configure openswan 
  file { "/etc/ipsec.conf":
-      ensure => $openswan::ensure,
-      content => template("openswan/ipsec.erb"),
-  }
+  ensure => $openswan::ensure,
+  content => template("openswan/ipsec.erb"),
+ }
 
  file { "/etc/ipsec.d/connection":
-	ensure => directory,
+	ensure => $conn_dir_ensure,
+	force => true,
  }
 
  file { "/etc/ipsec.secrets":
-	ensure => present,
+	ensure => $openswan::ensure,
 	content => template("openswan/ipsec.secrets.erb"),
  }
   
