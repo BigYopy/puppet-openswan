@@ -1,9 +1,9 @@
-name    'Admin-openswan'
+name    'BigYopy-openswan'
 version '0.1.0'
-source ''
+source 'https://github.com/BigYopy/puppet-openswan.git'
 author 'Ayoub ELHAMDANI'
-license ''
-summary 'Manage VPN Connections'
+license 'Apache License, Version 2.0'
+summary 'Openswan installation and configuration + Site to Site vpn creation'
 description ''
 project_page ''
 

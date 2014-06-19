@@ -16,6 +16,7 @@ Usage Examples
 
 ```````````````````````````````````````````````
 class { 'openswan': }
+```````````````````````````````````````````````
 
 * To create a Site to Site VPN use connection define 
  
