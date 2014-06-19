@@ -1,5 +1,9 @@
 # openswan #
 
+Requirement
+------------
+* Enable IP Forwarding
+
 This module provides:
 ----------------------
 * Openswan Installation and configuration on an Ubuntu Server
@@ -13,3 +17,5 @@ Usage Examples
 ```````````````````````````````````````````````
 class { 'openswan': }
 
+* To create a Site to Site VPN use connection define 
+ 

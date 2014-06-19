@@ -56,7 +56,6 @@
 #	Default: ignore
 #	Valid values: start, add, ignore, manual, route
 #
-#
 # [*psk*]
 #	psk key
 #
