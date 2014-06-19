@@ -1,8 +1,11 @@
-class openswan::service {
+class openswan::service (
+  $service_status='running',
+  $service_enbale=true
+){
   
   service { $openswan::opensewan_service :
-    ensure => running,
-    enable => true,
+    ensure => $service_status,
+    enable => $service_enbale,
   }
   
 }

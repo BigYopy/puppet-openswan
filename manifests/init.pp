@@ -49,10 +49,26 @@ class openswan (
   $secrets_dir=$openswan::params::secrets_dir  
 )inherits openswan::params{
 
+validate_re($ensure, ['^present$', '^absent$'], "correct valurs are : present, absent ")
+
+if $ensure == 'present' {
+
 anchor {'openswan::begin': }
 class {'openswan::install': } ->
 class {'openswan::config': } ~>
 class {'openswan::service': }
 anchor {'openswan::end': }
+
+}else {
+  
+anchor {'openswan::begin': }
+class {'openswan::service': 
+   service_status => 'stopped'
+} ->
+class {'openswan::config': } ->
+class {'openswan::install': } 
+anchor {'openswan::end': }
+
+}
 
 }
