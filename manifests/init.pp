@@ -38,6 +38,8 @@
 #
 class openswan (
   $ensure='present',
+  $service_ensure='running',
+  $service_enable=true,
   $openswan_package=$openswan::params::openswan_pkg,
   $opensewan_service=$openswan::params::service_name,
   $nat_traversal=$openswan::params::nat_traversal,
@@ -49,26 +51,20 @@ class openswan (
   $secrets_dir=$openswan::params::secrets_dir  
 )inherits openswan::params{
 
-validate_re($ensure, ['^present$', '^absent$'], "correct valurs are : present, absent ")
+validate_re($ensure, ['^present$', '^purged$'], "correct valurs are : present, absent ")
 
 if $ensure == 'present' {
-
-anchor {'openswan::begin': }
+anchor {'openswan::begin': } ->
 class {'openswan::install': } ->
 class {'openswan::config': } ~>
-class {'openswan::service': }
+class {'openswan::service': } ->
 anchor {'openswan::end': }
-
-}else {
-  
-anchor {'openswan::begin': }
-class {'openswan::service': 
-   service_status => 'stopped'
-} ->
-class {'openswan::config': } ->
-class {'openswan::install': } 
+}
+else {
+anchor {'openswan::begin': } ->
+#class {'openswan::config': } ->
+class {'openswan::install': } ->
 anchor {'openswan::end': }
-
 }
 
 }

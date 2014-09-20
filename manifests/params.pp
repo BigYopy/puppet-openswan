@@ -1,8 +1,8 @@
 class openswan::params {
 
-#openswan deb package: 
+#openswan package: 
 case $::operatingsystem {
-    debian,ubuntu: {
+    'Debian', 'Ubuntu', 'Redhat', 'Centos', 'Fedora': {
       $openswan_pkg = 'openswan'
       $service_name = 'ipsec'
     }
