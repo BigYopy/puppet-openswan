@@ -62,36 +62,36 @@
 #
 
 define openswan::connection (
- $type=undef,
- $authby=undef,
- $left=undef,
- $leftid=undef,
- $leftnexthop=undef,
- $leftsubnet=undef,
- $leftsubnets=undef,
- $right=undef,
- $rightsubnet=undef,
- $rightsubnets=undef,
- $pfs=undef,
- $auto=undef,
- $psk=undef
+$type=undef,
+$authby=undef,
+$left=undef,
+$leftid=undef,
+$leftnexthop=undef,
+$leftsubnet=undef,
+$leftsubnets=undef,
+$right=undef,
+$rightsubnet=undef,
+$rightsubnets=undef,
+$pfs=undef,
+$auto=undef,
+$psk=undef
 ){
-  require openswan
+require openswan
   
-  File { 
-    owner => 'root',
-    group => 'root',
-    mode => '644',
+File { 
+  owner => 'root',
+  group => 'root',
+  mode => '644',
+}
+
+file { "${openswan::connections_dir}/${name}.conf" :
+  content => template("openswan/connection.erb"),
+  notify => Class['openswan::service'],
   }
-  
-  file { "${openswan::connections_dir}/${name}.conf" :
-    content => template("openswan/connection.erb"),
-    notify => Class['openswan::service'],
-    }
-  
-  file { "${openswan::connections_dir}/${name}.secrets":
-    content => "${leftid} ${right} : PSK \"${psk}\" \n",
-    notify => Class['openswan::service'],
-  }
+
+file { "${openswan::connections_dir}/${name}.secrets":
+  content => "${leftid} ${right} : PSK \"${psk}\" \n",
+  notify => Class['openswan::service'],
+}
   
 }

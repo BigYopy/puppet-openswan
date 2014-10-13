@@ -37,34 +37,24 @@
 # class { 'openswan': }
 #
 class openswan (
-  $ensure='present',
-  $service_ensure='running',
-  $service_enable=true,
-  $openswan_package=$openswan::params::openswan_pkg,
-  $opensewan_service=$openswan::params::service_name,
-  $nat_traversal=$openswan::params::nat_traversal,
-  $virtual_private=$openswan::params::virtual_private,
-  $opportunistic_encryption=$openswan::params::opportunistic_encryption,
-  $protostack=$openswan::params::protostack,
-  $uniqueids=$openswan::params::uniqueids,
-  $connections_dir=$openswan::params::connections_dir,
-  $secrets_dir=$openswan::params::secrets_dir  
+  $ensure                   = 'present',
+  $openswan_package         = $openswan::params::openswan_pkg,
+  $opensewan_service        = $openswan::params::service_name,
+  $nat_traversal            = $openswan::params::nat_traversal,
+  $virtual_private          = $openswan::params::virtual_private,
+  $opportunistic_encryption = $openswan::params::opportunistic_encryption,
+  $protostack               = $openswan::params::protostack,
+  $uniqueids                = $openswan::params::uniqueids,
+  $ipsec_conf               = $openswan::params::ipsec_conf,
+  $connections_dir          = $openswan::params::connections_dir,
+  $secrets_dir              = $openswan::params::secrets_dir  
 )inherits openswan::params{
 
 validate_re($ensure, ['^present$', '^purged$'], "correct valurs are : present, absent ")
 
-if $ensure == 'present' {
-anchor {'openswan::begin': } ->
 class {'openswan::install': } ->
 class {'openswan::config': } ~>
 class {'openswan::service': } ->
-anchor {'openswan::end': }
-}
-else {
-anchor {'openswan::begin': } ->
-#class {'openswan::config': } ->
-class {'openswan::install': } ->
-anchor {'openswan::end': }
-}
+Class ['openswan']
 
 }
