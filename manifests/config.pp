@@ -19,7 +19,7 @@ file { $openswan::ipsec_secrets_conf:
   ensure  => file,
 	owner   => 'root',
   group   => 'root',
-  mode    => '0644',
+  mode    => '0600',
 	content => template("openswan/ipsec.secrets.erb"),
  }
 
