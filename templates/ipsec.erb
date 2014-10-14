@@ -26,4 +26,6 @@ config setup
 	uniqueids=<%= @uniqueids %>
 <% end -%>
 
+<% if @connections_dir -%>
 include <%= @connections_dir %>/*.conf
+<% end -%>

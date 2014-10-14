@@ -46,13 +46,25 @@ class openswan (
   $protostack               = $openswan::params::protostack,
   $uniqueids                = $openswan::params::uniqueids,
   $ipsec_conf               = $openswan::params::ipsec_conf,
+  $ipsec_secrets_conf       = $openswan::params::ipsec_secrets_conf,
   $connections_dir          = $openswan::params::connections_dir,
   $secrets_dir              = $openswan::params::secrets_dir  
 )inherits openswan::params{
 
-class {'openswan::install': } ->
-class {'openswan::config': } ~>
-class {'openswan::service': } ->
-Class ['openswan']
+if $ensure == 'present' {
+contain openswan::install
+contain openswan::config
+contain openswan::service
+
+Class['openswan::install'] ->
+Class['openswan::config'] ~>
+Class['openswan::service']
+
+} else {
+contain openswan::install
+}
+
+
+
 
 }

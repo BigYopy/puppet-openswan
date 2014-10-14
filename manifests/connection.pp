@@ -80,7 +80,7 @@ $auto         = undef,
 $psk          = undef
 ){
 
-require openswan
+include openswan
 
 File {
   owner => 'root',
@@ -91,12 +91,14 @@ File {
 file { "${openswan::connections_dir}/${name}.conf" :
   ensure  => file,
   content => template('openswan/connection.erb'),
+  require => Class['openswan::config'],
   notify  => Class['openswan::service'],
   }
 
-file { "${openswan::connections_dir}/${name}.secrets":
+file { "${openswan::secrets_dir}/${name}.secrets":
   ensure  => file,
   content => "${leftid} ${right} : PSK \"${psk}\" \n",
+  require => Class['openswan::config'],
   notify  => Class['openswan::service'],
   }
 

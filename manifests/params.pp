@@ -15,8 +15,10 @@ case $::operatingsystem {
     $protostack               = 'netkey'
     ##
     $uniqueids                = 'yes'
-    #openswan conf file
+    #ipsec main conf file
     $ipsec_conf               = '/etc/ipsec.conf'
+    #ipsec main secrets conf
+    $ipsec_secrets_conf       = '/etc/ipsec.secrets'
     #connection folder
     $connections_dir          = '/etc/ipsec.d/connection'
     #secrets folder

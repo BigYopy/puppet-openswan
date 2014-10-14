@@ -1,6 +1,5 @@
 class openswan::config {
-
-## configure openswan 
+ 
 file { $openswan::ipsec_conf:
   ensure  => file,
   owner   => 'root',
@@ -16,12 +15,22 @@ file { $openswan::connections_dir:
 	force  => true,
  }
 
-file { "/etc/ipsec.secrets":
+file { $openswan::ipsec_secrets_conf:
   ensure  => file,
 	owner   => 'root',
   group   => 'root',
   mode    => '0644',
 	content => template("openswan/ipsec.secrets.erb"),
  }
+
+if ! defined (File[$openswan::secrets_dir]) {
+file {$openswan::secrets_dir:
+  ensure => directory,
+  owner  => 'root',
+  group  => 'root',
+  mode   => '0744',
+  force  => true,
+  }
+}
   
 }
