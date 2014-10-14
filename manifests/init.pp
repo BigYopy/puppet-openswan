@@ -50,8 +50,6 @@ class openswan (
   $secrets_dir              = $openswan::params::secrets_dir  
 )inherits openswan::params{
 
-validate_re($ensure, ['^present$', '^purged$'], "correct valurs are : present, absent ")
-
 class {'openswan::install': } ->
 class {'openswan::config': } ~>
 class {'openswan::service': } ->

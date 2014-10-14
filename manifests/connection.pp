@@ -1,97 +1,103 @@
 # ==Define: Openswan conection
 #
-# This define allows you to create vpn connection 
+# This define allows you to create vpn connection
 #
 # ===Parameters:
 # [*type*]
-#   set the IPsec mode to use 
-#	Default: tunnel
-#	Valid values: tunnel, transport, passthrough
+#   set the IPsec mode to use
+#       Default: tunnel
+#       Valid values: tunnel, transport, passthrough
 #
 # [*authby*]
-#	set how the two security gateways should authenticate each other
-#	Valid values: secret, rsasig, secret|rsasig, never 
+#       set how the two security gateways should authenticate each other
+#       Valid values: secret, rsasig, secret|rsasig, never
 #
 # [*left*]
-#	specify the IP address of openswan server public-network interface 
-#	Valid values: FQDN, IP address, interface name, %any, %defaultroute, %opportunistic, %group, %opportunisticgroup
+#       specify the IP address of openswan server public-network interface
+#       Valid values: FQDN, IP address, interface name, %any, %defaultroute,
+#                     %opportunistic, %group, %opportunisticgroup
 #
 # [*leftid*]
-#	specify how the left participant should be identified for authentication
-#	Default: left 
-#	Valid values: IP address, @FQDN, %fromcert, %none, %myid
+#       specify how the left participant should be identified for authentication
+#       Default: left
+#       Valid values: IP address, @FQDN, %fromcert, %none, %myid
 #
 # [*leftnexthop*]
-#	specify the next-hop gateway IP address for the left server's connection to the public network
-#	Default: %direct
-#	Valid values: IP address, %direct
+#       specify the next-hop gateway IP address for the left server's
+#       connection to the public network
+#       Default: %direct
+#       Valid values: IP address, %direct
 #
 # [*leftsubnet*]
-#	specify private subnet behind the left openswan server
-#	Valid values: network/netmask
+#       specify private subnet behind the left openswan server
+#       Valid values: network/netmask
 #
 # [*leftsubnets*]
-#	specify multiple private subnets behind the left openswan server
-#	Valid values: { networkA/netmaskA networkB/netmaskB [...] }
+#       specify multiple private subnets behind the left openswan server
+#       Valid values: { networkA/netmaskA networkB/netmaskB [...] }
 #
 #
 # [*right*]
-#	specify the IP address of openswan server public-network interface 
-#	Valid values: FQDN, IP address, interface name, %any, %defaultroute, %opportunistic, %group, %opportunisticgroup
+#       specify the IP address of openswan server public-network interface
+#       Valid values: FQDN, IP address, interface name, %any, %defaultroute,
+#               %opportunistic, %group, %opportunisticgroup
 #
 # [*rightsubnet*]
-#	specify private subnet behind the right openswan server
-#	Valid values: network/netmask
+#       specify private subnet behind the right openswan server
+#       Valid values: network/netmask
 #
 # [*rightsubnets*]
-#	specify multiple private subnets behind the right openswan server
-#	Valid values: { networkA/netmaskA networkB/netmaskB [...] }
+#       specify multiple private subnets behind the right openswan server
+#       Valid values: { networkA/netmaskA networkB/netmaskB [...] }
 #
 # [*pfs*]
-#	enable Perfect Forward Secrecy of keys
-#	Default: yes
-#	Valid values: yes, no
+#       enable Perfect Forward Secrecy of keys
+#       Default: yes
+#       Valid values: yes, no
 #
 # [*auto*]
-#	Default: ignore
-#	Valid values: start, add, ignore, manual, route
+#       Default: ignore
+#       Valid values: start, add, ignore, manual, route
 #
 # [*psk*]
-#	psk key
+#       psk key
 #
 #
 
 define openswan::connection (
-$type=undef,
-$authby=undef,
-$left=undef,
-$leftid=undef,
-$leftnexthop=undef,
-$leftsubnet=undef,
-$leftsubnets=undef,
-$right=undef,
-$rightsubnet=undef,
-$rightsubnets=undef,
-$pfs=undef,
-$auto=undef,
-$psk=undef
+$type         = undef,
+$authby       = undef,
+$left         = undef,
+$leftid       = undef,
+$leftnexthop  = undef,
+$leftsubnet   = undef,
+$leftsubnets  = undef,
+$right        = undef,
+$rightsubnet  = undef,
+$rightsubnets = undef,
+$pfs          = undef,
+$auto         = undef,
+$psk          = undef
 ){
+
 require openswan
-  
-File { 
+
+File {
   owner => 'root',
   group => 'root',
-  mode => '644',
-}
+  mode  => '0644',
+  }
 
 file { "${openswan::connections_dir}/${name}.conf" :
-  content => template("openswan/connection.erb"),
-  notify => Class['openswan::service'],
+  ensure  => file,
+  content => template('openswan/connection.erb'),
+  notify  => Class['openswan::service'],
   }
 
 file { "${openswan::connections_dir}/${name}.secrets":
+  ensure  => file,
   content => "${leftid} ${right} : PSK \"${psk}\" \n",
-  notify => Class['openswan::service'],
-}
-  
+  notify  => Class['openswan::service'],
+  }
+
 }
