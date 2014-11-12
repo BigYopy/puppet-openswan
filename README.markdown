@@ -1,5 +1,8 @@
 # openswan #
 
+[![Build Status](https://travis-ci.org/BigYopy/puppet-openswan.png?branch=master)]
+(https://travis-ci.org/BigYopy/puppet-openswan)
+
 Requirement
 ------------
 * Enable IP Forwarding
