@@ -3,6 +3,12 @@
 # This define allows you to create vpn connection
 #
 # ===Parameters:
+# 
+# [*ensure*]
+#   whether create connection or not
+#       Default: present
+#       Valid values: present, absent
+# 
 # [*type*]
 #   set the IPsec mode to use
 #       Default: tunnel
@@ -65,6 +71,7 @@
 #
 
 define openswan::connection (
+$ensure       = 'present',
 $type         = undef,
 $authby       = undef,
 $left         = undef,
@@ -82,21 +89,23 @@ $psk          = undef
 
 include openswan
 
-File {
-  owner => 'root',
-  group => 'root',
-  mode  => '0644',
-  }
+validate_re($ensure, ['^present', '^absent'], "${ensure} is not a valid value for ensure attribute")
 
 file { "${openswan::connections_dir}/${name}.conf" :
-  ensure  => file,
+  ensure  => $ensure,
+  owner   => 'root',
+  group   => 'root',
+  mode    => '0644',
   content => template('openswan/connection.erb'),
   require => Class['openswan::config'],
   notify  => Class['openswan::service'],
   }
 
 file { "${openswan::secrets_dir}/${name}.secrets":
-  ensure  => file,
+  ensure  => $ensure,
+  owner   => 'root',
+  group   => 'root',
+  mode    => '0600',
   content => "${leftid} ${right} : PSK \"${psk}\" \n",
   require => Class['openswan::config'],
   notify  => Class['openswan::service'],

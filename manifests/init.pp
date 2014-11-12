@@ -36,6 +36,10 @@
 #
 # class { 'openswan': }
 #
+# === Authors
+#
+# Ayoub Elhamdani <a.elhamdani90@gmail.com>
+#
 class openswan (
   $ensure                   = 'present',
   $openswan_package         = $openswan::params::openswan_pkg,
@@ -48,23 +52,25 @@ class openswan (
   $ipsec_conf               = $openswan::params::ipsec_conf,
   $ipsec_secrets_conf       = $openswan::params::ipsec_secrets_conf,
   $connections_dir          = $openswan::params::connections_dir,
-  $secrets_dir              = $openswan::params::secrets_dir  
+  $secrets_dir              = $openswan::params::secrets_dir
 )inherits openswan::params{
+  validate_re($ensure, ['^present', '^absent'], "${ensure} is not a valid value for ensure attribute")
+  validate_re($nat_traversal, ['^yes', '^no'], 'valid values are : yes or no')
+  validate_re($protostack, ['^auto', '^klips', '^netkey', '^mast'], 'valid values are : auto, klips, netkey, mast')
+  validate_re($uniqueids, ['^yes', '^no'], 'valid values are : yes or no')
 
-if $ensure == 'present' {
-contain openswan::install
-contain openswan::config
-contain openswan::service
+  if $ensure == 'present' {
+    contain openswan::install
+    contain openswan::config
+    contain openswan::service
 
-Class['openswan::install'] ->
-Class['openswan::config'] ~>
-Class['openswan::service']
+    Class['openswan::install'] ->
+    Class['openswan::config'] ~>
+    Class['openswan::service']
 
-} else {
-contain openswan::install
-}
-
-
-
+  }
+  else {
+    contain openswan::install
+  }
 
 }
