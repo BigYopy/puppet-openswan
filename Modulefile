@@ -1,5 +1,5 @@
 name    'BigYopy-openswan'
-version '0.1.3'
+version '0.1.5'
 source 'https://github.com/BigYopy/puppet-openswan.git'
 author 'Ayoub ELHAMDANI'
 license 'Apache License, Version 2.0'
