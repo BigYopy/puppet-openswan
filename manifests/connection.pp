@@ -71,44 +71,44 @@
 #
 
 define openswan::connection (
-$ensure       = 'present',
-$type         = undef,
-$authby       = undef,
-$left         = undef,
-$leftid       = undef,
-$leftnexthop  = undef,
-$leftsubnet   = undef,
-$leftsubnets  = undef,
-$right        = undef,
-$rightsubnet  = undef,
-$rightsubnets = undef,
-$pfs          = undef,
-$auto         = undef,
-$psk          = undef
+ $ensure       = 'present',
+ $type         = undef,
+ $authby       = undef,
+ $left         = undef,
+ $leftid       = undef,
+ $leftnexthop  = undef,
+ $leftsubnet   = undef,
+ $leftsubnets  = undef,
+ $right        = undef,
+ $rightsubnet  = undef,
+ $rightsubnets = undef,
+ $pfs          = undef,
+ $auto         = undef,
+ $psk          = undef
 ){
 
-include openswan
+  include openswan
 
-validate_re($ensure, ['^present', '^absent'], "${ensure} is not a valid value for ensure attribute")
+  validate_re($ensure, ['present', 'absent'], "${ensure} is not a valid value for ensure attribute")
 
-file { "${openswan::connections_dir}/${name}.conf" :
-  ensure  => $ensure,
-  owner   => 'root',
-  group   => 'root',
-  mode    => '0644',
-  content => template('openswan/connection.erb'),
-  require => Class['openswan::config'],
-  notify  => Class['openswan::service'],
+  file { "${openswan::connections_dir}/${name}.conf" :
+    ensure  => $ensure,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template('openswan/connection.erb'),
+    require => Class['openswan::config'],
+    notify  => Class['openswan::service'],
   }
 
-file { "${openswan::secrets_dir}/${name}.secrets":
-  ensure  => $ensure,
-  owner   => 'root',
-  group   => 'root',
-  mode    => '0600',
-  content => "${leftid} ${right} : PSK \"${psk}\" \n",
-  require => Class['openswan::config'],
-  notify  => Class['openswan::service'],
+  file { "${openswan::secrets_dir}/${name}.secrets":
+    ensure  => $ensure,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0600',
+    content => "${leftid} ${right} : PSK \"${psk}\" \n",
+    require => Class['openswan::config'],
+    notify  => Class['openswan::service'],
   }
 
 }

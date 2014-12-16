@@ -54,10 +54,10 @@ class openswan (
   $connections_dir          = $openswan::params::connections_dir,
   $secrets_dir              = $openswan::params::secrets_dir
 )inherits openswan::params{
-  validate_re($ensure, ['^present', '^absent'], "${ensure} is not a valid value for ensure attribute")
-  validate_re($nat_traversal, ['^yes', '^no'], 'valid values are : yes or no')
-  validate_re($protostack, ['^auto', '^klips', '^netkey', '^mast'], 'valid values are : auto, klips, netkey, mast')
-  validate_re($uniqueids, ['^yes', '^no'], 'valid values are : yes or no')
+  validate_re($ensure, ['present', 'absent'], "${ensure} is not a valid value for ensure attribute")
+  validate_re($nat_traversal, ['yes', 'no'], 'valid values are : yes or no')
+  validate_re($protostack, ['auto', 'klips', 'netkey', 'mast'], 'valid values are : auto, klips, netkey, mast')
+  validate_re($uniqueids, ['yes', 'no'], 'valid values are : yes or no')
 
   if $ensure == 'present' {
     contain openswan::install
