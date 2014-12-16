@@ -71,20 +71,20 @@
 #
 
 define openswan::connection (
- $ensure       = 'present',
- $type         = undef,
- $authby       = undef,
- $left         = undef,
- $leftid       = undef,
- $leftnexthop  = undef,
- $leftsubnet   = undef,
- $leftsubnets  = undef,
- $right        = undef,
- $rightsubnet  = undef,
- $rightsubnets = undef,
- $pfs          = undef,
- $auto         = undef,
- $psk          = undef
+  $ensure       = 'present',
+  $type         = undef,
+  $authby       = undef,
+  $left         = undef,
+  $leftid       = undef,
+  $leftnexthop  = undef,
+  $leftsubnet   = undef,
+  $leftsubnets  = undef,
+  $right        = undef,
+  $rightsubnet  = undef,
+  $rightsubnets = undef,
+  $pfs          = undef,
+  $auto         = undef,
+  $psk          = undef
 ){
 
   include openswan
