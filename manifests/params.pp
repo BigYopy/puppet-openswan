@@ -14,7 +14,7 @@
 class openswan::params {
 
   case $::operatingsystem {
-    'Debian', 'Ubuntu', 'Redhat', 'Centos', 'Fedora': {
+    'Debian', 'Ubuntu', 'Redhat', 'Centos', 'Fedora', 'Amazon': {
       $openswan_pkg             = 'openswan'
       $service_name             = 'ipsec'
       #enable Nat traversal
