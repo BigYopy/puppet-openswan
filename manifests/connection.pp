@@ -68,6 +68,19 @@
 # [*psk*]
 #       psk key
 #
+# [*ike*]
+#       Internet Key Exchange
+#
+# [*esp*]
+#       Encapsulating Security Payload
+#
+# [*keyexchange*]
+#       IPsec Key Exchange
+#
+# [*salifetime*]
+#
+# [*ikelifetime*]
+#
 #
 
 define openswan::connection (
@@ -84,7 +97,12 @@ define openswan::connection (
   $rightsubnets = undef,
   $pfs          = undef,
   $auto         = undef,
-  $psk          = undef
+  $psk          = undef,
+  $ike          = undef,
+  $esp          = undef,
+  $keyexchange  = undef,
+  $salifetime   = undef,
+  $ikelifetime  = undef,
 ){
 
   include openswan

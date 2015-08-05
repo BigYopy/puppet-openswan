@@ -35,6 +35,21 @@ conn <%= @name %>
 <% if @auto -%>
 	auto=<%= @auto %>
 <% end -%>
+<% if @ike -%>
+        ike=<%= @ike %>
+<% end -%>
+<% if @esp -%>
+        esp=<%= @esp %>
+<% end -%>
+<% if @keyexchange -%>
+        keyexchange=<%= @keyexchange %>
+<% end -%>
+<% if @salifetime -%>
+        salifetime=<%= @salifetime %>
+<% end -%>
+<% if @ikelifetime -%>
+        ikelifetime=<%= @ikelifetime %>
+<% end -%>
 
 
 
