@@ -1,0 +1,57 @@
+{
+  "author": "Ayoub ELHAMDANI",
+  "source": "https://github.com/BigYopy/puppet-openswan",
+  "issues_url": "https://github.com/BigYopy/puppet-openswan/issues",
+  "summary": "Openswan installation and configuration + Site to Site vpn creation",
+  "project_page": "https://github.com/BigYopy/puppet-openswan",
+  "tags": [],
+  "version": "0.1.6",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": "4.x.x"
+    }
+  ],
+  "license": "Apache License, Version 2.0",
+  "name": "BigYopy-openswan",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "12.04",
+        "14.04"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": "3.x"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": "3.x"
+    }
+  ]
+}
